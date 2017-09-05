@@ -1,4 +1,12 @@
 <updates>
+  <update version="1.4.4">
+    <files>
+      <file path="Components/LiveSplit.UnrealLoads.dll" status="changed"/>
+    </files>
+    <changelog>
+      <change>Added saving time removal as a part of Deus Ex Load Remover.</change>
+    </changelog>
+  </update>
   <update version="1.4.3">
     <files>
       <file path="Components/LiveSplit.UnrealLoads.dll" status="changed"/>
