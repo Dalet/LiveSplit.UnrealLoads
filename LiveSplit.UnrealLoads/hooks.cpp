@@ -13,6 +13,7 @@ typedef void (__thiscall *t_LoadMap_SplinterCell3)(void*, const void*, void*);
 typedef void (__thiscall *t_SaveGame)(void*, int);
 typedef int (__thiscall *t_SaveGame_SplinterCell)(void*, const void*);
 typedef void (__thiscall *t_SaveGame_SplinterCell3)(void*, void*, const void*);
+typedef void(__thiscall *t_saveGame_DeusEx)(void*, void*, const void*);
 
 t_LoadMap					g_oLoadMap;
 t_LoadMap_oldUnreal			g_oLoadMap_oldUnreal;
@@ -21,6 +22,7 @@ t_LoadMap_SplinterCell3		g_oLoadMap_SplinterCell3;
 t_SaveGame					g_oSaveGame;
 t_SaveGame_SplinterCell		g_oSaveGame_SplinterCell;
 t_SaveGame_SplinterCell3	g_oSaveGame_SplinterCell3;
+t_saveGame_DeusEx	g_oSaveGame_DeusEx;
 
 DllExport int		g_status = STATUS_NONE;
 DllExport wchar_t	g_map[MAX_PATH];
@@ -109,6 +111,14 @@ void __fastcall		Detour_SaveGame_SplinterCell3(void *This, void *edx, void *ALev
 {
 	g_status = STATUS_SAVING;
 	g_oSaveGame_SplinterCell3(This, ALevelInfo, Position);
+	g_status = STATUS_NONE;
+}
+
+DllExport
+void __fastcall		Detour_SaveGame_DeusEx(void *This, void *a2, const void *a3)
+{
+	g_status = STATUS_SAVING;
+	g_oSaveGame_DeusEx(This, a2, a3);
 	g_status = STATUS_NONE;
 }
 
