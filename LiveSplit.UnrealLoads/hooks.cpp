@@ -13,7 +13,7 @@ typedef void (__thiscall *t_LoadMap_SplinterCell3)(void*, const void*, void*);
 typedef void (__thiscall *t_SaveGame)(void*, int);
 typedef int (__thiscall *t_SaveGame_SplinterCell)(void*, const void*);
 typedef void (__thiscall *t_SaveGame_SplinterCell3)(void*, void*, const void*);
-typedef void(__thiscall *t_saveGame_DeusEx)(void*, int, bool);
+typedef void (__thiscall *t_saveGame_DeusEx)(void*, int, bool);
 
 t_LoadMap					g_oLoadMap;
 t_LoadMap_oldUnreal			g_oLoadMap_oldUnreal;
