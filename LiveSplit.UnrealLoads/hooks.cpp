@@ -13,7 +13,7 @@ typedef void (__thiscall *t_LoadMap_SplinterCell3)(void*, const void*, void*);
 typedef void (__thiscall *t_SaveGame)(void*, int);
 typedef int (__thiscall *t_SaveGame_SplinterCell)(void*, const void*);
 typedef void (__thiscall *t_SaveGame_SplinterCell3)(void*, void*, const void*);
-typedef void(__thiscall *t_saveGame_DeusEx)(void*, void*, const void*);
+typedef void(__thiscall *t_saveGame_DeusEx)(void*, int, bool);
 
 t_LoadMap					g_oLoadMap;
 t_LoadMap_oldUnreal			g_oLoadMap_oldUnreal;
@@ -115,7 +115,7 @@ void __fastcall		Detour_SaveGame_SplinterCell3(void *This, void *edx, void *ALev
 }
 
 DllExport
-void __fastcall		Detour_SaveGame_DeusEx(void *This, void *a2, const void *a3)
+void __fastcall		Detour_SaveGame_DeusEx(void *This, void *edx, int a2, bool a3)
 {
 	g_status = STATUS_SAVING;
 	g_oSaveGame_DeusEx(This, a2, a3);
