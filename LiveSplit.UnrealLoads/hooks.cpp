@@ -10,6 +10,7 @@ typedef void *(__thiscall *t_LoadMap)(void*, const void*, void*, const void*, vo
 typedef void *(__thiscall *t_LoadMap_oldUnreal)(void*, const void*, void*, const void*, void*, void*);
 typedef void *(__thiscall *t_LoadMap_SplinterCell)(void*, const void*, void*);
 typedef void (__thiscall *t_LoadMap_SplinterCell3)(void*, const void*, void*);
+typedef int (__thiscall *t_LoadMap_DS9)(void*, void*, const void*,void*,void*,void*);
 typedef void (__thiscall *t_SaveGame)(void*, int);
 typedef int (__thiscall *t_SaveGame_SplinterCell)(void*, const void*);
 typedef void (__thiscall *t_SaveGame_SplinterCell3)(void*, void*, const void*);
@@ -19,6 +20,7 @@ t_LoadMap					g_oLoadMap;
 t_LoadMap_oldUnreal			g_oLoadMap_oldUnreal;
 t_LoadMap_SplinterCell		g_oLoadMap_SplinterCell;
 t_LoadMap_SplinterCell3		g_oLoadMap_SplinterCell3;
+t_LoadMap_DS9				g_oLoadMap_DS9;
 t_SaveGame					g_oSaveGame;
 t_SaveGame_SplinterCell		g_oSaveGame_SplinterCell;
 t_SaveGame_SplinterCell3	g_oSaveGame_SplinterCell3;
@@ -87,6 +89,18 @@ void __fastcall	Detour_LoadMap_SplinterCell3(void *This, void *edx, const void *
 	g_status = STATUS_LOADING_MAP;
 	g_oLoadMap_SplinterCell3(This, URL, Error);
 	g_status = STATUS_NONE;
+}
+
+DllExport
+int __fastcall	Detour_LoadMap_DS9(void *This, void *edx, void *someDouble, const void *URL, void *arg4, void *arg5, void* arg6)
+{
+	wchar_t *map = *((wchar_t **)URL + 7);
+	set_map(map);
+
+	g_status = STATUS_LOADING_MAP;
+	int ret = g_oLoadMap_DS9(This, someDouble, URL, arg4, arg5, arg6);
+	g_status = STATUS_NONE;
+	return ret;
 }
 
 DllExport

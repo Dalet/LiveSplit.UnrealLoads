@@ -33,7 +33,8 @@ namespace LiveSplit.UnrealLoads
 			new UnrealGold(),
 			new SplinterCell3(),
 			new SplinterCell(),
-			new DeusEx()
+			new MobileForces(),
+			new XCOM_Enforcer(),
 		};
 
 		public static readonly string[] SupportedProcessesNames =

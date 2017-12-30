@@ -64,10 +64,11 @@
     <Compile Include="Games\HarryPotter1.cs" />
     <Compile Include="Games\HarryPotter3.cs" />
     <Compile Include="Games\HarryPotter2.cs" />
+    <Compile Include="Games\XCOM_Enforcer.cs" />
     <Compile Include="Games\Shrek2.cs" />
     <Compile Include="Games\SplinterCell.cs" />
     <Compile Include="Games\SplinterCell3.cs" />
-    <Compile Include="Games\DeusEx.cs" />
+    <Compile Include="Games\MobileForces.cs" />
     <Compile Include="Games\UnrealGold.cs" />
     <Compile Include="Games\WheelOfTime.cs" />
     <Compile Include="Hooks.cs" />

@@ -19,6 +19,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+.vs/*
 
 # Visual Studio profiler
 *.psess
