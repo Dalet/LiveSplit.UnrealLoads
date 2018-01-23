@@ -19,15 +19,30 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public override HashSet<string> Maps => new HashSet<string>
 		{
+			"0_0_2_training",
+			"0_0_3_training",
 			"1_1_0tbilisi",
+			"1_1_1tbilisi",
+			"1_1_2tbilisi",
 			"1_2_1defenseministry",
+			"1_2_2defenseministry",
 			"1_3_2caspianoilrefinery",
+			"1_3_3caspianoilrefinery",
 			"2_1_0cia",
+			"2_1_1cia",
+			"2_1_2cia",
 			"2_2_1_kalinatek",
+			"2_2_2_kalinatek",
+			"2_2_3_kalinatek",
 			"4_1_1chineseembassy",
+			"4_1_2chineseembassy",
 			"4_2_1_abattoir",
+			"4_2_2_abattoir",
 			"4_3_0chineseembassy",
+			"4_3_1chineseembassy",
+			"4_3_2chineseembassy",
 			"5_1_1_presidentialpalace"
+			"5_1_2_presidentialpalace"
 		};
 
 		public override Type LoadMapDetourT => typeof(LoadMapDetour_SplinterCell);
