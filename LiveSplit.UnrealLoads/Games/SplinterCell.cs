@@ -41,7 +41,7 @@ namespace LiveSplit.UnrealLoads.Games
 			"4_3_0chineseembassy",
 			"4_3_1chineseembassy",
 			"4_3_2chineseembassy",
-			"5_1_1_presidentialpalace"
+			"5_1_1_presidentialpalace",
 			"5_1_2_presidentialpalace"
 		};
 
