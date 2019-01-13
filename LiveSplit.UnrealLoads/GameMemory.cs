@@ -131,7 +131,7 @@ namespace LiveSplit.UnrealLoads
 					bool isLoading;
 					bool prevIsLoading = false;
 					var map = string.Empty;
-					var prevMap = Path.GetFileNameWithoutExtension(_map.Current).ToLower();
+					var prevMap = string.Empty;
 
 					DoTimerAction(Game.OnAttach(game));
 
