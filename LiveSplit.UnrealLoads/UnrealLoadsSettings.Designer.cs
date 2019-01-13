@@ -36,6 +36,7 @@
             this.chkSplitOnNewMap = new System.Windows.Forms.CheckBox();
             this.chkDbgShowMap = new System.Windows.Forms.CheckBox();
             this.chkSplitOncePerMap = new System.Windows.Forms.CheckBox();
+            this.chkFilterPrevMap = new System.Windows.Forms.CheckBox();
             this.gbMapWhitelist = new System.Windows.Forms.GroupBox();
             this.tlpMapWhitelist = new System.Windows.Forms.TableLayoutPanel();
             this.chklbMapSet = new System.Windows.Forms.CheckedListBox();
@@ -70,7 +71,7 @@
             this.tlpMain.RowCount = 2;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpMain.Size = new System.Drawing.Size(462, 363);
+            this.tlpMain.Size = new System.Drawing.Size(462, 386);
             this.tlpMain.TabIndex = 0;
             // 
             // gbStartSplits
@@ -81,7 +82,7 @@
             this.gbStartSplits.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbStartSplits.Location = new System.Drawing.Point(3, 3);
             this.gbStartSplits.Name = "gbStartSplits";
-            this.gbStartSplits.Size = new System.Drawing.Size(456, 134);
+            this.gbStartSplits.Size = new System.Drawing.Size(456, 157);
             this.gbStartSplits.TabIndex = 5;
             this.gbStartSplits.TabStop = false;
             this.gbStartSplits.Text = "General";
@@ -98,16 +99,18 @@
             this.tlpStartSplits.Controls.Add(this.chkSplitOnNewMap, 0, 2);
             this.tlpStartSplits.Controls.Add(this.chkDbgShowMap, 0, 4);
             this.tlpStartSplits.Controls.Add(this.chkSplitOncePerMap, 0, 3);
+            this.tlpStartSplits.Controls.Add(this.chkFilterPrevMap, 0, 5);
             this.tlpStartSplits.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpStartSplits.Location = new System.Drawing.Point(3, 16);
             this.tlpStartSplits.Name = "tlpStartSplits";
-            this.tlpStartSplits.RowCount = 5;
+            this.tlpStartSplits.RowCount = 6;
             this.tlpStartSplits.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpStartSplits.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpStartSplits.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpStartSplits.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpStartSplits.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpStartSplits.Size = new System.Drawing.Size(450, 115);
+            this.tlpStartSplits.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpStartSplits.Size = new System.Drawing.Size(450, 138);
             this.tlpStartSplits.TabIndex = 4;
             // 
             // chkAutoStart
@@ -167,6 +170,16 @@
             this.chkSplitOncePerMap.Text = "Split automatically only once per map";
             this.chkSplitOncePerMap.UseVisualStyleBackColor = true;
             // 
+            // chkFilterPrevMap
+            // 
+            this.chkFilterPrevMap.AutoSize = true;
+            this.chkFilterPrevMap.Location = new System.Drawing.Point(3, 118);
+            this.chkFilterPrevMap.Name = "chkFilterPrevMap";
+            this.chkFilterPrevMap.Size = new System.Drawing.Size(128, 17);
+            this.chkFilterPrevMap.TabIndex = 9;
+            this.chkFilterPrevMap.Text = "Filter by previous map";
+            this.chkFilterPrevMap.UseVisualStyleBackColor = true;
+            // 
             // gbMapWhitelist
             // 
             this.gbMapWhitelist.AutoSize = true;
@@ -174,7 +187,7 @@
             this.gbMapWhitelist.Controls.Add(this.tlpMapWhitelist);
             this.gbMapWhitelist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbMapWhitelist.Enabled = false;
-            this.gbMapWhitelist.Location = new System.Drawing.Point(3, 143);
+            this.gbMapWhitelist.Location = new System.Drawing.Point(3, 166);
             this.gbMapWhitelist.Name = "gbMapWhitelist";
             this.gbMapWhitelist.Size = new System.Drawing.Size(456, 217);
             this.gbMapWhitelist.TabIndex = 6;
@@ -360,5 +373,6 @@
 		private System.Windows.Forms.ComboBox cbGame;
 		private System.Windows.Forms.CheckedListBox chklbMapSet;
 		private System.Windows.Forms.CheckBox chkSplitOncePerMap;
+		private System.Windows.Forms.CheckBox chkFilterPrevMap;
 	}
 }

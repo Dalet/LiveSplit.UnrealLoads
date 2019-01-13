@@ -17,6 +17,7 @@ namespace LiveSplit.UnrealLoads
 		public bool AutoSplitOnMapChange { get; set; }
 		public bool AutoSplitOncePerMap { get; set; }
 		public bool DbgShowMap { get; set; }
+		public bool UsePrevMap { get; set; }
 
 		public Dictionary<string, bool> Maps { get; private set; }
 
@@ -24,6 +25,7 @@ namespace LiveSplit.UnrealLoads
 		const bool DEFAULT_AUTORESET = true;
 		const bool DEFAULT_AUTOSPLITONMAPCHANGE = false;
 		const bool DEFAULT_AUTOSPLITONCEPERMAP = true;
+		const bool DEFAULT_USEPREVMAP = false;
 
 		LiveSplitState _state;
 		bool _isRefreshingListbox;
@@ -47,6 +49,7 @@ namespace LiveSplit.UnrealLoads
 			chkSplitOncePerMap.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
 			gbMapWhitelist.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
 			chkDbgShowMap.DataBindings.Add("Checked", this, "DbgShowMap", false, DataSourceUpdateMode.OnPropertyChanged);
+			chkFilterPrevMap.DataBindings.Add("Checked",this,"UsePrevMap",false,DataSourceUpdateMode.OnPropertyChanged);
 
 			// defaults
 			AutoStart = DEFAULT_AUTOSTART;
@@ -54,6 +57,7 @@ namespace LiveSplit.UnrealLoads
 			AutoSplitOnMapChange = DEFAULT_AUTOSPLITONMAPCHANGE;
 			AutoSplitOncePerMap = DEFAULT_AUTOSPLITONCEPERMAP;
 			cbGame.SelectedItem = SearchGameSupport(_state.Run.GameName)?.GetType() ?? GameMemory.SupportedGames[0].GetType();
+			UsePrevMap = DEFAULT_USEPREVMAP;
 
 #if DEBUG
 			chkDbgShowMap.Visible = true;
@@ -99,6 +103,7 @@ namespace LiveSplit.UnrealLoads
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "AutoReset", AutoReset));
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "AutoSplitOnMapChange", AutoSplitOnMapChange));
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "AutoSplitOncePerMap", AutoSplitOncePerMap));
+			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "UsePrevMap", UsePrevMap));
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "Game", ((Type)cbGame.SelectedItem).Name));
 
 			var mapsNode = settingsNode.AppendChild(doc.CreateElement("MapWhitelist"));
@@ -120,6 +125,7 @@ namespace LiveSplit.UnrealLoads
 			AutoReset = SettingsHelper.ParseBool(settings["AutoReset"], DEFAULT_AUTOSTART);
 			AutoSplitOnMapChange = SettingsHelper.ParseBool(settings["AutoSplitOnMapChange"], DEFAULT_AUTOSPLITONMAPCHANGE);
 			AutoSplitOncePerMap = SettingsHelper.ParseBool(settings["AutoSplitOncePerMap"], DEFAULT_AUTOSPLITONCEPERMAP);
+			UsePrevMap = SettingsHelper.ParseBool(settings["UsePrevMap"], DEFAULT_USEPREVMAP);
 
 			GameSupport game = null;
 			if (!string.IsNullOrWhiteSpace(settings["Game"]?.InnerText))

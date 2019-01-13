@@ -37,7 +37,7 @@ namespace LiveSplit.UnrealLoads
 
 			_state.OnStart += _state_OnStart;
 
-			_gameMemory = new GameMemory();
+			_gameMemory = new GameMemory(Settings);
 			_gameMemory.OnReset += gameMemory_OnReset;
 			_gameMemory.OnStart += gameMemory_OnStart;
 			_gameMemory.OnSplit += _gameMemory_OnSplit;
