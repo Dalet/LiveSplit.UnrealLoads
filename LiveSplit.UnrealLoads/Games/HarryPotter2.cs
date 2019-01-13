@@ -97,8 +97,8 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public override bool? IsLoading(MemoryWatcherList watchers)
 		{
-			if (_isSkippingCut.Current)
-				return true;
+//			if (_isSkippingCut.Current)
+//				return true;
 
 			return null;
 		}
