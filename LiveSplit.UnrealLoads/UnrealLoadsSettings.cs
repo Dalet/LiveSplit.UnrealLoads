@@ -49,7 +49,13 @@ namespace LiveSplit.UnrealLoads
 			chkSplitOncePerMap.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
 			gbMapWhitelist.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
 			chkDbgShowMap.DataBindings.Add("Checked", this, "DbgShowMap", false, DataSourceUpdateMode.OnPropertyChanged);
-			chkFilterPrevMap.DataBindings.Add("Checked",this,"UsePrevMap",false,DataSourceUpdateMode.OnPropertyChanged);
+			rbSplitWhenLeaving.DataBindings.Add("Checked", this, "UsePrevMap", false, DataSourceUpdateMode.OnPropertyChanged);
+
+			// bind to the opposite of UsePrevMap
+			var splitWhenEnteringBinding = new Binding("Checked", this, "UsePrevMap", false, DataSourceUpdateMode.OnPropertyChanged);
+			splitWhenEnteringBinding.Format += (s, e) => e.Value = !(bool)e.Value;
+			splitWhenEnteringBinding.Parse += (s, e) => e.Value = !(bool)e.Value;
+			rbSplitWhenEntering.DataBindings.Add(splitWhenEnteringBinding);
 
 			// defaults
 			AutoStart = DEFAULT_AUTOSTART;
