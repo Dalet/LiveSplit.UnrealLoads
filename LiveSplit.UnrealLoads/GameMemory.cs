@@ -150,7 +150,7 @@ namespace LiveSplit.UnrealLoads
 
 						if (_map.Changed)
 						{
-							map = Path.GetFileNameWithoutExtension(_map.Current).ToLower();
+							map = Path.GetFileNameWithoutExtension(_map.Current);
 
 							if (Settings != null)
 							{

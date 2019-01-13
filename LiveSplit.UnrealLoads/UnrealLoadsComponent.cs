@@ -61,7 +61,7 @@ namespace LiveSplit.UnrealLoads
 
 		void _gameMemory_OnMapChange(object sender, string map)
 		{
-			map = map.ToLower();
+
 			if (Settings.AutoSplitOnMapChange && (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(map)))
 			{
 				var enabled = false;
