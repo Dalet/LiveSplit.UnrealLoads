@@ -87,7 +87,9 @@ namespace LiveSplit.UnrealLoads.Games
 		public override TimerAction[] OnUpdate(Process game, MemoryWatcherList watchers)
 		{
 			_isSkippingCut.Update(game);
-			if (_isSkippingCut.Changed && _isSkippingCut.Current)
+			var map = (StringWatcher)watchers["map"];
+
+			if (_isSkippingCut.Changed && _isSkippingCut.Current && (string.IsNullOrEmpty(map.Old) || map.Current.ToLower() == "privetdr.unr") )
 				return new TimerAction[] { TimerAction.Start };
 
 			return null;
