@@ -36,7 +36,7 @@ namespace LiveSplit.UnrealLoads
 
 			_state = state;
 
-			Maps = new Dictionary<string, bool>();
+			Maps = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
 			cbGame.DataSource = GameMemory.SupportedGames.Select(s => s.GetType())
 				.OrderBy(t => t.Name)
 				.ToList();
