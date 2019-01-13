@@ -144,6 +144,7 @@ namespace LiveSplit.UnrealLoads
 						if (_map.Changed)
 						{
 							map = Path.GetFileNameWithoutExtension(_map.Current);
+							prevMap = Path.GetFileNameWithoutExtension(_map.Old);
 
 							_uiThread.Post(d => OnMapChange?.Invoke(this, prevMap, map), null);
 
@@ -170,7 +171,7 @@ namespace LiveSplit.UnrealLoads
 						}
 
 						prevIsLoading = isLoading;
-						prevMap = map;
+						//prevMap = map;
 						frameCounter++;
 
 						Thread.Sleep(SLEEP_TIME);
