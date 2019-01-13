@@ -23,8 +23,6 @@ namespace LiveSplit.UnrealLoads
 	{
 		public const int SLEEP_TIME = 15;
 
-		private UnrealLoadsSettings Settings;
-
 		public static readonly GameSupport[] SupportedGames = new GameSupport[]
 		{
 			new HarryPotter1(),
@@ -52,7 +50,7 @@ namespace LiveSplit.UnrealLoads
 		public event EventHandler OnLoadStarted;
 		public event EventHandler OnLoadEnded;
 		public event MapChangeEventHandler OnMapChange;
-		public delegate void MapChangeEventHandler(object sender, string map);
+		public delegate void MapChangeEventHandler(object sender, string prevmap, string map);
 
 		public GameSupport Game { get; private set; }
 
@@ -78,11 +76,6 @@ namespace LiveSplit.UnrealLoads
 		{
 			_ignorePIDs = new HashSet<int>();
 			_watchers = new MemoryWatcherList();
-		}
-
-		public GameMemory(UnrealLoadsSettings settings) : this()
-		{
-			Settings = settings;
 		}
 
 		public void StartMonitoring()
@@ -152,15 +145,7 @@ namespace LiveSplit.UnrealLoads
 						{
 							map = Path.GetFileNameWithoutExtension(_map.Current);
 
-							if (Settings != null)
-							{
-								string sendMap = Settings.UsePrevMap ? prevMap : map;
-								_uiThread.Post(d => OnMapChange?.Invoke(this, sendMap), null);
-							}
-							else
-							{
-								_uiThread.Post(d => OnMapChange?.Invoke(this, map), null);
-							}
+							_uiThread.Post(d => OnMapChange?.Invoke(this, prevMap, map), null);
 
 							Debug.WriteLine(string.Format("[NoLoads] Map is changing from \"{0}\" to \"{1}\" - {2}", prevMap, map, frameCounter));
 						}
