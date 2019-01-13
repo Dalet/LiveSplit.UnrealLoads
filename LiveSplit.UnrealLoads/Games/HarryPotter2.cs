@@ -54,7 +54,6 @@ namespace LiveSplit.UnrealLoads.Games
 			"Duel08",
 			"Duel09",
 			"Duel10",
-			"Entry",
 			"Entryhall_hub",
 			"FlyingFordCutScene",
 			"Grandstaircase_hub",
@@ -65,7 +64,6 @@ namespace LiveSplit.UnrealLoads.Games
 			"Quidditch",
 			"Quidditch_Intro",
 			"Sepia_Hallway",
-			"startup",
 			"Transition"
 		};
 
