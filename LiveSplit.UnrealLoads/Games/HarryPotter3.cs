@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using LiveSplit.ComponentUtil;
+using System;
 
 namespace LiveSplit.UnrealLoads.Games
 {
@@ -52,6 +54,16 @@ namespace LiveSplit.UnrealLoads.Games
 			"hp3_beanbonus",
 			"hp3_infirmary"
 		};
+
+		public override TimerAction[] OnMapLoad(MemoryWatcherList watchers)
+		{
+			var map = (StringWatcher)watchers["map"];
+
+			if (map.Current.Equals("Adv1Express",StringComparison.OrdinalIgnoreCase))
+				return new TimerAction[] { TimerAction.Start };
+			else
+				return null;
+		}
 	}
 }
 
