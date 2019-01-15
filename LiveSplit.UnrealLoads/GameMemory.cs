@@ -171,7 +171,6 @@ namespace LiveSplit.UnrealLoads
 						}
 
 						prevIsLoading = isLoading;
-						//prevMap = map;
 						frameCounter++;
 
 						Thread.Sleep(SLEEP_TIME);

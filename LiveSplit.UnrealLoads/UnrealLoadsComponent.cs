@@ -59,22 +59,23 @@ namespace LiveSplit.UnrealLoads
 			_timer.Split();
 		}
 
-		void _gameMemory_OnMapChange(object sender, string prevmap, string map)
+		void _gameMemory_OnMapChange(object sender, string prevMap, string map)
 		{
-			string mapname = Settings.UsePrevMap ? prevmap : map;
 
-			if (Settings.AutoSplitOnMapChange && (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapname)))
+			string mapName = Settings.SplitOnLeave ? prevMap : map;
+
+			if (Settings.AutoSplitOnMapChange && (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName)))
 			{
 				var enabled = false;
 				if (Settings.Maps.Count == 0)
 					enabled = true;
 				else
-					Settings.Maps.TryGetValue(mapname, out enabled);
+					Settings.Maps.TryGetValue(mapName, out enabled);
 
 				if (enabled)
 				{
 					_timer.Split();
-					_splitHistory.Add(mapname);
+					_splitHistory.Add(mapName);
 				}
 			}
 
