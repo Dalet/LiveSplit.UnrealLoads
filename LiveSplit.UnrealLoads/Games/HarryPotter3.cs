@@ -19,6 +19,7 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public override HashSet<string> Maps => new HashSet<string>
 		{
+			"hp3_adv1express",
 			"hp3_groundsdada",
 			"hp3_ch1carperetractum",
 			"hp3_ch1carperetractumb",
@@ -28,24 +29,28 @@ namespace LiveSplit.UnrealLoads.Games
 			"hp3_ch2draconifors",
 			"hp3_ch2draconiforsb",
 			"hp3_quidditch",
+			"hp3_adv2exppatronum",
 			"hp3_adv3library",
 			"hp3_ch3glacius",
 			"hp3_ch3glaciusb",
 			"hp3_buckyexecuted",
 			"hp3_whompingwillow",
+			"hp3_adv5shack",
 			"hp3_dementorbattle",
 			"hp3_adv6paddock",
 			"hp3_darktower",
 			"hp3_fa1ron",
 			"hp3_fa2hermione",
 			"hp3_fa3harry",
+			"hp3_final",
 			"hp3_portraitpassword_b",
 			"hp3_portraitpassword_c",
 			"hp3_portraitpassword_d",
 			"hp3_portraitpassword_e",
 			"hp3_portraitpassword_f",
 			"hp3_dungeonhub",
-			"hp3_beanbonus"
+			"hp3_beanbonus",
+			"hp3_infirmary"
 		};
 	}
 }
