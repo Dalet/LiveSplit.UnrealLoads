@@ -81,7 +81,7 @@ namespace LiveSplit.UnrealLoads
 
 #if DEBUG
 			if (Settings.DbgShowMap)
-				MessageBox.Show(_state.Form, "Map name: \"" + mapname + "\"", "LiveSplit.UnrealLoads",
+				MessageBox.Show(_state.Form, "Map name: \"" + mapName + "\"", "LiveSplit.UnrealLoads",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 #endif
 		}
