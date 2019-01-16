@@ -50,7 +50,7 @@ namespace LiveSplit.UnrealLoads
 		public event EventHandler OnLoadStarted;
 		public event EventHandler OnLoadEnded;
 		public event MapChangeEventHandler OnMapChange;
-		public delegate void MapChangeEventHandler(object sender, string prevmap, string map);
+		public delegate void MapChangeEventHandler(object sender, string prevMap, string map);
 
 		public GameSupport Game { get; private set; }
 
