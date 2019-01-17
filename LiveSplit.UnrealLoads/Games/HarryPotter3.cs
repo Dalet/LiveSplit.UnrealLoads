@@ -59,7 +59,7 @@ namespace LiveSplit.UnrealLoads.Games
 		{
 			var map = (StringWatcher)watchers["map"];
 
-			if (map.Current.Equals("Adv1Express",StringComparison.OrdinalIgnoreCase))
+			if (map.Current.Equals("hp3_adv1express.unr",StringComparison.OrdinalIgnoreCase))
 				return new TimerAction[] { TimerAction.Start };
 			else
 				return null;
