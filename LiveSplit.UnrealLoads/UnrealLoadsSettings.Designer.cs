@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.gbStartSplits = new System.Windows.Forms.GroupBox();
             this.tlpStartSplits = new System.Windows.Forms.TableLayoutPanel();
@@ -38,7 +39,6 @@
             this.chkSplitOncePerMap = new System.Windows.Forms.CheckBox();
             this.gbMapWhitelist = new System.Windows.Forms.GroupBox();
             this.tlpMapWhitelist = new System.Windows.Forms.TableLayoutPanel();
-            this.chklbMapSet = new System.Windows.Forms.CheckedListBox();
             this.tlpGameSelection = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.cbGame = new System.Windows.Forms.ComboBox();
@@ -47,10 +47,11 @@
             this.btnRemoveMap = new System.Windows.Forms.Button();
             this.txtMap = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.gbWhitelistSplitTiming = new System.Windows.Forms.GroupBox();
-            this.tlpWhitelistSplitTiming = new System.Windows.Forms.TableLayoutPanel();
-            this.rbSplitWhenEntering = new System.Windows.Forms.RadioButton();
-            this.rbSplitWhenLeaving = new System.Windows.Forms.RadioButton();
+            this.dgvMapSet = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitOnEnterDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.splitOnLeaveDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.mapBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tlpMain.SuspendLayout();
             this.gbStartSplits.SuspendLayout();
             this.tlpStartSplits.SuspendLayout();
@@ -58,8 +59,8 @@
             this.tlpMapWhitelist.SuspendLayout();
             this.tlpGameSelection.SuspendLayout();
             this.tlpMapSetEdit.SuspendLayout();
-            this.gbWhitelistSplitTiming.SuspendLayout();
-            this.tlpWhitelistSplitTiming.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMapSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -76,7 +77,7 @@
             this.tlpMain.RowCount = 2;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpMain.Size = new System.Drawing.Size(462, 413);
+            this.tlpMain.Size = new System.Drawing.Size(462, 389);
             this.tlpMain.TabIndex = 0;
             // 
             // gbStartSplits
@@ -183,7 +184,7 @@
             this.gbMapWhitelist.Enabled = false;
             this.gbMapWhitelist.Location = new System.Drawing.Point(3, 143);
             this.gbMapWhitelist.Name = "gbMapWhitelist";
-            this.gbMapWhitelist.Size = new System.Drawing.Size(456, 267);
+            this.gbMapWhitelist.Size = new System.Drawing.Size(456, 243);
             this.gbMapWhitelist.TabIndex = 6;
             this.gbMapWhitelist.TabStop = false;
             this.gbMapWhitelist.Text = "Map Whitelist";
@@ -194,33 +195,19 @@
             this.tlpMapWhitelist.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tlpMapWhitelist.ColumnCount = 1;
             this.tlpMapWhitelist.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpMapWhitelist.Controls.Add(this.chklbMapSet, 0, 2);
+            this.tlpMapWhitelist.Controls.Add(this.dgvMapSet, 0, 1);
             this.tlpMapWhitelist.Controls.Add(this.tlpGameSelection, 0, 0);
-            this.tlpMapWhitelist.Controls.Add(this.tlpMapSetEdit, 0, 3);
-            this.tlpMapWhitelist.Controls.Add(this.gbWhitelistSplitTiming, 0, 1);
+            this.tlpMapWhitelist.Controls.Add(this.tlpMapSetEdit, 0, 2);
             this.tlpMapWhitelist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMapWhitelist.Location = new System.Drawing.Point(3, 16);
             this.tlpMapWhitelist.Name = "tlpMapWhitelist";
-            this.tlpMapWhitelist.RowCount = 4;
-            this.tlpMapWhitelist.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMapWhitelist.RowCount = 3;
             this.tlpMapWhitelist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMapWhitelist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMapWhitelist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMapWhitelist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpMapWhitelist.Size = new System.Drawing.Size(450, 248);
+            this.tlpMapWhitelist.Size = new System.Drawing.Size(450, 224);
             this.tlpMapWhitelist.TabIndex = 0;
-            // 
-            // chklbMapSet
-            // 
-            this.chklbMapSet.CheckOnClick = true;
-            this.chklbMapSet.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chklbMapSet.FormattingEnabled = true;
-            this.chklbMapSet.Location = new System.Drawing.Point(3, 86);
-            this.chklbMapSet.MultiColumn = true;
-            this.chklbMapSet.Name = "chklbMapSet";
-            this.chklbMapSet.Size = new System.Drawing.Size(444, 124);
-            this.chklbMapSet.TabIndex = 2;
-            this.chklbMapSet.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chklbMapSet_ItemCheck);
             // 
             // tlpGameSelection
             // 
@@ -274,7 +261,7 @@
             this.tlpMapSetEdit.Controls.Add(this.txtMap, 1, 0);
             this.tlpMapSetEdit.Controls.Add(this.label3, 0, 0);
             this.tlpMapSetEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMapSetEdit.Location = new System.Drawing.Point(3, 216);
+            this.tlpMapSetEdit.Location = new System.Drawing.Point(3, 192);
             this.tlpMapSetEdit.Name = "tlpMapSetEdit";
             this.tlpMapSetEdit.RowCount = 1;
             this.tlpMapSetEdit.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -322,55 +309,66 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Map:";
             // 
-            // gbWhitelistSplitTiming
+            // dgvMapSet
             // 
-            this.gbWhitelistSplitTiming.Controls.Add(this.tlpWhitelistSplitTiming);
-            this.gbWhitelistSplitTiming.Location = new System.Drawing.Point(10, 36);
-            this.gbWhitelistSplitTiming.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
-            this.gbWhitelistSplitTiming.Name = "gbWhitelistSplitTiming";
-            this.gbWhitelistSplitTiming.Size = new System.Drawing.Size(221, 44);
-            this.gbWhitelistSplitTiming.TabIndex = 10;
-            this.gbWhitelistSplitTiming.TabStop = false;
-            this.gbWhitelistSplitTiming.Text = "Split when";
+            this.dgvMapSet.AllowUserToAddRows = false;
+            this.dgvMapSet.AllowUserToDeleteRows = false;
+            this.dgvMapSet.AllowUserToResizeColumns = false;
+            this.dgvMapSet.AllowUserToResizeRows = false;
+            this.dgvMapSet.AutoGenerateColumns = false;
+            this.dgvMapSet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgvMapSet.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dgvMapSet.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvMapSet.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dgvMapSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMapSet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.splitOnEnterDataGridViewCheckBoxColumn,
+            this.splitOnLeaveDataGridViewCheckBoxColumn});
+            this.dgvMapSet.DataSource = this.mapBindingSource;
+            this.dgvMapSet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMapSet.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dgvMapSet.Location = new System.Drawing.Point(3, 36);
+            this.dgvMapSet.MultiSelect = false;
+            this.dgvMapSet.Name = "dgvMapSet";
+            this.dgvMapSet.RowHeadersVisible = false;
+            this.dgvMapSet.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvMapSet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.ColumnHeaderSelect;
+            this.dgvMapSet.ShowCellErrors = false;
+            this.dgvMapSet.ShowEditingIcon = false;
+            this.dgvMapSet.Size = new System.Drawing.Size(444, 150);
+            this.dgvMapSet.TabIndex = 1;
             // 
-            // tlpWhitelistSplitTiming
+            // nameDataGridViewTextBoxColumn
             // 
-            this.tlpWhitelistSplitTiming.AutoSize = true;
-            this.tlpWhitelistSplitTiming.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tlpWhitelistSplitTiming.ColumnCount = 2;
-            this.tlpWhitelistSplitTiming.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpWhitelistSplitTiming.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpWhitelistSplitTiming.Controls.Add(this.rbSplitWhenEntering, 0, 0);
-            this.tlpWhitelistSplitTiming.Controls.Add(this.rbSplitWhenLeaving, 1, 0);
-            this.tlpWhitelistSplitTiming.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpWhitelistSplitTiming.Location = new System.Drawing.Point(3, 16);
-            this.tlpWhitelistSplitTiming.Name = "tlpWhitelistSplitTiming";
-            this.tlpWhitelistSplitTiming.RowCount = 1;
-            this.tlpWhitelistSplitTiming.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpWhitelistSplitTiming.Size = new System.Drawing.Size(215, 25);
-            this.tlpWhitelistSplitTiming.TabIndex = 0;
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Map";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // rbSplitWhenEntering
+            // splitOnEnterDataGridViewCheckBoxColumn
             // 
-            this.rbSplitWhenEntering.AutoSize = true;
-            this.rbSplitWhenEntering.Checked = true;
-            this.rbSplitWhenEntering.Location = new System.Drawing.Point(3, 3);
-            this.rbSplitWhenEntering.Name = "rbSplitWhenEntering";
-            this.rbSplitWhenEntering.Size = new System.Drawing.Size(64, 17);
-            this.rbSplitWhenEntering.TabIndex = 0;
-            this.rbSplitWhenEntering.TabStop = true;
-            this.rbSplitWhenEntering.Text = "Entering";
-            this.rbSplitWhenEntering.UseVisualStyleBackColor = true;
+            this.splitOnEnterDataGridViewCheckBoxColumn.DataPropertyName = "SplitOnEnter";
+            this.splitOnEnterDataGridViewCheckBoxColumn.HeaderText = "Enter";
+            this.splitOnEnterDataGridViewCheckBoxColumn.Name = "splitOnEnterDataGridViewCheckBoxColumn";
+            this.splitOnEnterDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.splitOnEnterDataGridViewCheckBoxColumn.Width = 38;
             // 
-            // rbSplitWhenLeaving
+            // splitOnLeaveDataGridViewCheckBoxColumn
             // 
-            this.rbSplitWhenLeaving.AutoSize = true;
-            this.rbSplitWhenLeaving.Location = new System.Drawing.Point(110, 3);
-            this.rbSplitWhenLeaving.Name = "rbSplitWhenLeaving";
-            this.rbSplitWhenLeaving.Size = new System.Drawing.Size(63, 17);
-            this.rbSplitWhenLeaving.TabIndex = 1;
-            this.rbSplitWhenLeaving.Text = "Leaving";
-            this.rbSplitWhenLeaving.UseVisualStyleBackColor = true;
+            this.splitOnLeaveDataGridViewCheckBoxColumn.DataPropertyName = "SplitOnLeave";
+            this.splitOnLeaveDataGridViewCheckBoxColumn.HeaderText = "Leave";
+            this.splitOnLeaveDataGridViewCheckBoxColumn.Name = "splitOnLeaveDataGridViewCheckBoxColumn";
+            this.splitOnLeaveDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.splitOnLeaveDataGridViewCheckBoxColumn.Width = 43;
+            // 
+            // mapBindingSource
+            // 
+            this.mapBindingSource.AllowNew = true;
+            this.mapBindingSource.DataSource = typeof(LiveSplit.UnrealLoads.Map);
             // 
             // UnrealLoadsSettings
             // 
@@ -379,7 +377,7 @@
             this.Controls.Add(this.tlpMain);
             this.Name = "UnrealLoadsSettings";
             this.Padding = new System.Windows.Forms.Padding(7);
-            this.Size = new System.Drawing.Size(476, 487);
+            this.Size = new System.Drawing.Size(476, 404);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
             this.gbStartSplits.ResumeLayout(false);
@@ -394,10 +392,8 @@
             this.tlpGameSelection.PerformLayout();
             this.tlpMapSetEdit.ResumeLayout(false);
             this.tlpMapSetEdit.PerformLayout();
-            this.gbWhitelistSplitTiming.ResumeLayout(false);
-            this.gbWhitelistSplitTiming.PerformLayout();
-            this.tlpWhitelistSplitTiming.ResumeLayout(false);
-            this.tlpWhitelistSplitTiming.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMapSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,11 +418,11 @@
 		private System.Windows.Forms.TextBox txtMap;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox cbGame;
-		private System.Windows.Forms.CheckedListBox chklbMapSet;
 		private System.Windows.Forms.CheckBox chkSplitOncePerMap;
-		private System.Windows.Forms.GroupBox gbWhitelistSplitTiming;
-		private System.Windows.Forms.TableLayoutPanel tlpWhitelistSplitTiming;
-		private System.Windows.Forms.RadioButton rbSplitWhenEntering;
-		private System.Windows.Forms.RadioButton rbSplitWhenLeaving;
+		private System.Windows.Forms.DataGridView dgvMapSet;
+		private System.Windows.Forms.BindingSource mapBindingSource;
+		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn splitOnEnterDataGridViewCheckBoxColumn;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn splitOnLeaveDataGridViewCheckBoxColumn;
 	}
 }

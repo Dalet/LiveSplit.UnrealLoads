@@ -17,9 +17,8 @@ namespace LiveSplit.UnrealLoads
 		public bool AutoSplitOnMapChange { get; set; }
 		public bool AutoSplitOncePerMap { get; set; }
 		public bool DbgShowMap { get; set; }
-		public bool SplitOnLeave { get; set; }
 
-		public Dictionary<string, bool> Maps { get; private set; }
+		public IList<Map> Maps => (IList<Map>) mapBindingSource.List;
 
 		const bool DEFAULT_AUTOSTART = true;
 		const bool DEFAULT_AUTORESET = true;
@@ -36,7 +35,6 @@ namespace LiveSplit.UnrealLoads
 
 			_state = state;
 
-			Maps = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
 			cbGame.DataSource = GameMemory.SupportedGames.Select(s => s.GetType())
 				.OrderBy(t => t.Name)
 				.ToList();
@@ -49,13 +47,6 @@ namespace LiveSplit.UnrealLoads
 			chkSplitOncePerMap.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
 			gbMapWhitelist.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
 			chkDbgShowMap.DataBindings.Add("Checked", this, "DbgShowMap", false, DataSourceUpdateMode.OnPropertyChanged);
-			rbSplitWhenLeaving.DataBindings.Add("Checked", this, "SplitOnLeave", false, DataSourceUpdateMode.OnPropertyChanged);
-
-			// bind to the opposite of SplitOnLeave
-			var splitWhenEnteringBinding = new Binding("Checked", this, "SplitOnLeave", false, DataSourceUpdateMode.OnPropertyChanged);
-			splitWhenEnteringBinding.Format += (s, e) => e.Value = !(bool)e.Value;
-			splitWhenEnteringBinding.Parse += (s, e) => e.Value = !(bool)e.Value;
-			rbSplitWhenEntering.DataBindings.Add(splitWhenEnteringBinding);
 
 			// defaults
 			AutoStart = DEFAULT_AUTOSTART;
@@ -63,7 +54,6 @@ namespace LiveSplit.UnrealLoads
 			AutoSplitOnMapChange = DEFAULT_AUTOSPLITONMAPCHANGE;
 			AutoSplitOncePerMap = DEFAULT_AUTOSPLITONCEPERMAP;
 			cbGame.SelectedItem = SearchGameSupport(_state.Run.GameName)?.GetType() ?? GameMemory.SupportedGames[0].GetType();
-			SplitOnLeave = DEFAULT_SPLITONLEAVE;
 
 #if DEBUG
 			chkDbgShowMap.Visible = true;
@@ -87,19 +77,6 @@ namespace LiveSplit.UnrealLoads
 			);
 		}
 
-		void RefreshCheckList()
-		{
-			_isRefreshingListbox = true;
-
-			chklbMapSet.Items.Clear();
-			foreach (var pair in Maps)
-			{
-				chklbMapSet.Items.Add(pair.Key, pair.Value);
-			}
-
-			_isRefreshingListbox = false;
-		}
-
 		public XmlNode GetSettings(XmlDocument doc)
 		{
 			XmlElement settingsNode = doc.CreateElement("Settings");
@@ -109,15 +86,15 @@ namespace LiveSplit.UnrealLoads
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "AutoReset", AutoReset));
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "AutoSplitOnMapChange", AutoSplitOnMapChange));
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "AutoSplitOncePerMap", AutoSplitOncePerMap));
-			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "SplitOnLeave", SplitOnLeave));
 			settingsNode.AppendChild(SettingsHelper.ToElement(doc, "Game", ((Type)cbGame.SelectedItem).Name));
 
 			var mapsNode = settingsNode.AppendChild(doc.CreateElement("MapWhitelist"));
-			foreach (var pair in Maps)
+			foreach (var map in Maps)
 			{
 				var elem = (XmlElement)mapsNode.AppendChild(doc.CreateElement("Map"));
-				elem.InnerText = pair.Key;
-				elem.SetAttribute("enabled", pair.Value.ToString());
+				elem.InnerText = map.Name;
+				elem.SetAttribute("SplitOnEnter", map.SplitOnEnter.ToString());
+				elem.SetAttribute("SplitOnLeave", map.SplitOnLeave.ToString());
 			}
 
 			return settingsNode;
@@ -131,7 +108,6 @@ namespace LiveSplit.UnrealLoads
 			AutoReset = SettingsHelper.ParseBool(settings["AutoReset"], DEFAULT_AUTOSTART);
 			AutoSplitOnMapChange = SettingsHelper.ParseBool(settings["AutoSplitOnMapChange"], DEFAULT_AUTOSPLITONMAPCHANGE);
 			AutoSplitOncePerMap = SettingsHelper.ParseBool(settings["AutoSplitOncePerMap"], DEFAULT_AUTOSPLITONCEPERMAP);
-			SplitOnLeave = SettingsHelper.ParseBool(settings["SplitOnLeave"], DEFAULT_SPLITONLEAVE);
 
 			GameSupport game = null;
 			if (!string.IsNullOrWhiteSpace(settings["Game"]?.InnerText))
@@ -144,13 +120,20 @@ namespace LiveSplit.UnrealLoads
 
 			if (settings["MapWhitelist"] != null)
 			{
+				var mapnames = from map in Maps
+							   select map.Name;
 				foreach (XmlElement elem in settings["MapWhitelist"].ChildNodes)
 				{
-					if (Maps.ContainsKey(elem.InnerText))
-						Maps[elem.InnerText] = bool.Parse(elem.GetAttribute("enabled"));
+					if (mapnames.Contains(elem.InnerText, StringComparer.OrdinalIgnoreCase))
+					{
+						var curMap = (from map in Maps
+									 where map.Name == elem.InnerText
+									 select map).First();
+						curMap.SplitOnEnter = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("SplitOnEnter")) ? "False" : elem.GetAttribute("SplitOnEnter"));
+						curMap.SplitOnLeave = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("SplitOnLeave")) ? "False" : elem.GetAttribute("SplitOnLeave"));
+					}
 				}
 			}
-			RefreshCheckList();
         }
 
 		void btnAddMap_Click(object sender, EventArgs e)
@@ -159,50 +142,34 @@ namespace LiveSplit.UnrealLoads
 
 			if (!string.IsNullOrWhiteSpace(txtMap.Text))
 			{
-				Maps.Add(txtMap.Text, true);
-				chklbMapSet.Items.Add(txtMap.Text, true);
+				Maps.Add(new Map(txtMap.Text));
 				txtMap.Clear();
 			}
 		}
 
 		void btnRemoveMap_Click(object sender, EventArgs e)
 		{
-			if (chklbMapSet.SelectedIndex < 0)
-				return;
+			foreach (DataGridViewRow row in dgvMapSet.SelectedRows)
+			{
+				Map map = (Map) row.DataBoundItem;
+				Maps.Remove(map);
+			}
 
-			var selectedIndex = chklbMapSet.SelectedIndex;
-            Maps.Remove((string)chklbMapSet.SelectedItem);
-			chklbMapSet.Items.RemoveAt(selectedIndex);
-
-			var count = chklbMapSet.Items.Count;
-            if (count > 0)
-				chklbMapSet.SelectedIndex = selectedIndex <= count - 1 ? selectedIndex : selectedIndex - 1;
 		}
 
 		void cbGame_SelectedIndexChanged(object sender, EventArgs e)
 		{
             var selected = (GameSupport)Activator.CreateInstance((Type)cbGame.SelectedItem);
 
-			var copy = new Dictionary<string, bool>(Maps);
 			Maps.Clear();
 			if (selected?.Maps != null)
 			{
 				foreach (var map in selected.Maps)
 				{
-					Maps[map] = copy.ContainsKey(map) ? copy[map] : true;
+					Maps.Add(new Map(map));
 				}
 			}
 
-			RefreshCheckList();
-		}
-
-		void chklbMapSet_ItemCheck(object sender, ItemCheckEventArgs e)
-		{
-			if (_isRefreshingListbox)
-				return;
-
-			var map = (string)chklbMapSet.Items[e.Index];
-			Maps[map] = CheckState.Checked == e.NewValue;
 		}
 	}
 }

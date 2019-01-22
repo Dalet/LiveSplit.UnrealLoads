@@ -50,7 +50,7 @@ namespace LiveSplit.UnrealLoads
 		public event EventHandler OnLoadStarted;
 		public event EventHandler OnLoadEnded;
 		public event MapChangeEventHandler OnMapChange;
-		public delegate void MapChangeEventHandler(object sender, string prevMap, string map);
+		public delegate void MapChangeEventHandler(object sender, string prevMap, string nextMap);
 
 		public GameSupport Game { get; private set; }
 
@@ -141,10 +141,10 @@ namespace LiveSplit.UnrealLoads
 
 						Debug.WriteLineIf(_status.Changed, string.Format("[NoLoads] Status changed from {1} to {2} - {0}", frameCounter, (Status)_status.Old, (Status)_status.Current));
 
-						if (_map.Changed)
-						{
+						if (_map.Changed && string.Equals(Path.GetExtension(_map.Current),"unr",StringComparison.OrdinalIgnoreCase))
+						{	
 							map = Path.GetFileNameWithoutExtension(_map.Current);
-							prevMap = Path.GetFileNameWithoutExtension(_map.Old);
+							prevMap = map;
 
 							_uiThread.Post(d => OnMapChange?.Invoke(this, prevMap, map), null);
 

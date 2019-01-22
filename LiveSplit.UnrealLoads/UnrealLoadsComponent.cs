@@ -4,6 +4,7 @@ using LiveSplit.UI.Components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
@@ -59,29 +60,56 @@ namespace LiveSplit.UnrealLoads
 			_timer.Split();
 		}
 
-		void _gameMemory_OnMapChange(object sender, string prevMap, string map)
+		void _gameMemory_OnMapChange(object sender, string prevMap, string nextMap)
 		{
 
-			string mapName = Settings.SplitOnLeave ? prevMap : map;
-
-			if (Settings.AutoSplitOnMapChange && (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName)))
+			if (Settings.AutoSplitOnMapChange)
 			{
-				var enabled = false;
-				if (Settings.Maps.Count == 0)
-					enabled = true;
-				else
-					Settings.Maps.TryGetValue(mapName, out enabled);
+				prevMap = prevMap.ToLower();
+				nextMap = nextMap.ToLower();
 
-				if (enabled)
+				var split = false;
+				if (Settings.Maps.Count == 0)
+					split = true;
+				else
+				{
+					{
+						var maps = Settings.Maps.Where(map => map.Name.ToLower() == prevMap && map.SplitOnLeave);
+						if (maps.Count() > 0)
+						{
+							var map = maps.First();
+							if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(map.Name.ToLower()))
+							{
+								split = true;
+								_splitHistory.Add(map.Name.ToLower());
+							}
+						}
+					}
+
+					{
+						var maps = Settings.Maps.Where(map => map.Name.ToLower() == nextMap && map.SplitOnEnter);
+						if (maps.Count() > 0)
+						{
+							var map = maps.First();
+							if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(map.Name.ToLower()))
+							{
+								split = true;
+								_splitHistory.Add(map.Name.ToLower());
+							}
+						}
+					}
+				}
+					
+
+				if (split)
 				{
 					_timer.Split();
-					_splitHistory.Add(mapName);
 				}
 			}
 
 #if DEBUG
 			if (Settings.DbgShowMap)
-				MessageBox.Show(_state.Form, "Map name: \"" + mapName + "\"", "LiveSplit.UnrealLoads",
+				MessageBox.Show(_state.Form, prevMap + " -> " + nextMap, "LiveSplit.UnrealLoads",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 #endif
 		}
