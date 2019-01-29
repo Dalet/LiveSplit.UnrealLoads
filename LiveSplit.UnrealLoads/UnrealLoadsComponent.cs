@@ -73,31 +73,31 @@ namespace LiveSplit.UnrealLoads
 					split = true;
 				else
 				{
+					var mapNames = from Map map in Settings.Maps
+								   where string.Equals(map.Name, prevMap, StringComparison.OrdinalIgnoreCase) && map.SplitOnLeave
+								   select map.Name;
+					if (mapNames.Count() > 0)
 					{
-						var maps = Settings.Maps.Where(map => map.Name.ToLower() == prevMap && map.SplitOnLeave);
-						if (maps.Count() > 0)
+						var mapName = mapNames.First();
+						if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName, StringComparer.OrdinalIgnoreCase))
 						{
-							var map = maps.First();
-							if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(map.Name.ToLower()))
-							{
-								split = true;
-								_splitHistory.Add(map.Name.ToLower());
-							}
+							split = true;
+							_splitHistory.Add(mapName);
 						}
 					}
-
+					
+					mapNames = from Map map in Settings.Maps
+							   where string.Equals(map.Name, nextMap, StringComparison.OrdinalIgnoreCase) && map.SplitOnEnter
+							   select map.Name;
+					if (mapNames.Count() > 0)
 					{
-						var maps = Settings.Maps.Where(map => map.Name.ToLower() == nextMap && map.SplitOnEnter);
-						if (maps.Count() > 0)
+						var mapName = mapNames.First();
+						if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName,StringComparer.OrdinalIgnoreCase))
 						{
-							var map = maps.First();
-							if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(map.Name.ToLower()))
-							{
-								split = true;
-								_splitHistory.Add(map.Name.ToLower());
-							}
+							split = true;
+							_splitHistory.Add(mapName);
 						}
-					}
+					}	
 				}
 					
 
