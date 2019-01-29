@@ -179,8 +179,6 @@ namespace LiveSplit.UnrealLoads
 							break;
 					}
 
-					//pause on crash/exit
-					_uiThread.Post(d => OnLoadStarted?.Invoke(this, EventArgs.Empty), null);
 					DoTimerAction(Game.OnDetach(game));
 				}
 				catch (Exception ex)
