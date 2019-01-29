@@ -19,6 +19,8 @@ namespace LiveSplit.UnrealLoads.Games
 			"hppoa"
 		};
 
+		public override string MapExtension => ".unr";
+
 		public override HashSet<string> Maps => new HashSet<string>
 		{
 			"hp3_adv1express",

@@ -22,6 +22,8 @@ namespace LiveSplit.UnrealLoads.Games
 			"game"
 		};
 
+		public override string MapExtension => ".unr";
+
 		public override HashSet<string> Maps => new HashSet<string>
 		{
 
