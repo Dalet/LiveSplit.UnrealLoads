@@ -27,7 +27,6 @@ namespace LiveSplit.UnrealLoads
 		const bool DEFAULT_SPLITONLEAVE = false;
 
 		LiveSplitState _state;
-		bool _isRefreshingListbox;
 
 		public UnrealLoadsSettings(LiveSplitState state)
 		{
