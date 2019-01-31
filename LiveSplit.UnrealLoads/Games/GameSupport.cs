@@ -29,13 +29,15 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public abstract HashSet<string> ProcessNames { get; }
 
+		public virtual string MapExtension { get; } = "";
+
 		public virtual HashSet<string> Maps { get; } = new HashSet<string>();
 
 		public virtual LoadMapDetour GetNewLoadMapDetour() => new LoadMapDetour();
 
 		public virtual SaveGameDetour GetNewSaveGameDetour() => new SaveGameDetour();
 
-		public virtual string MapExtension { get; }
+		
 
 		public string[] GetHookModules()
 		{

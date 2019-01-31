@@ -6,6 +6,8 @@ namespace LiveSplit.UnrealLoads.Games
 {
 	class HarryPotter3 : GameSupport
 	{
+		public override string MapExtension { get; } = ".unr";
+
 		public override HashSet<string> GameNames => new HashSet<string>
 		{
 			"Harry Potter 3",
@@ -18,8 +20,6 @@ namespace LiveSplit.UnrealLoads.Games
 		{
 			"hppoa"
 		};
-
-		public override string MapExtension => ".unr";
 
 		public override HashSet<string> Maps => new HashSet<string>
 		{
