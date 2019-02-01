@@ -126,16 +126,6 @@ namespace LiveSplit.UnrealLoads
 					var map = string.Empty;
 					var prevMap = string.Empty;
 
-					void MapChangeNotify()
-					{
-						prevMap = map;
-						map = Path.GetFileNameWithoutExtension(_map.Current);
-
-						_uiThread.Post(d => OnMapChange?.Invoke(this, prevMap, map), null);
-
-						Debug.WriteLine(string.Format("[NoLoads] Map is changing from \"{0}\" to \"{1}\" - {2}", prevMap, map, frameCounter));
-					}
-
 					DoTimerAction(Game.OnAttach(game));
 
 					while (!game.HasExited)
@@ -151,19 +141,14 @@ namespace LiveSplit.UnrealLoads
 
 						Debug.WriteLineIf(_status.Changed, string.Format("[NoLoads] Status changed from {1} to {2} - {0}", frameCounter, (Status)_status.Old, (Status)_status.Current));
 
-						if (_map.Changed)
+						if (_map.Changed && (string.IsNullOrEmpty(Game.MapExtension) || Path.GetExtension(_map.Current).Equals(Game.MapExtension,StringComparison.OrdinalIgnoreCase)))
 						{
-							if (!string.IsNullOrEmpty(Game.MapExtension))
-							{
-								if (Path.GetExtension(_map.Current).Equals(Game.MapExtension))
-								{
-									MapChangeNotify();
-								}
-							}
-							else
-							{
-								MapChangeNotify();
-							}
+							prevMap = map;
+							map = Path.GetFileNameWithoutExtension(_map.Current);
+
+							_uiThread.Post(d => OnMapChange?.Invoke(this, prevMap, map), null);
+
+							Debug.WriteLine(string.Format("[NoLoads] Map is changing from \"{0}\" to \"{1}\" - {2}", prevMap, map, frameCounter));
 						}
 						if (_status.Changed && _status.Current == (int)Status.LoadingMap)
 						{
