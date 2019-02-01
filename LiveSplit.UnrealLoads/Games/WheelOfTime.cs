@@ -87,7 +87,7 @@ namespace LiveSplit.UnrealLoads.Games
 		public override TimerAction[] OnDetach(Process game)
 		{
 			_hook.UnregisterAllHotkeys();
-			return null;
+			return base.OnDetach(game);
 		}
 
 		void ParseInis(Process game)

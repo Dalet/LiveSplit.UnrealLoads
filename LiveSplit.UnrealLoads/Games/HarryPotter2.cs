@@ -91,7 +91,7 @@ namespace LiveSplit.UnrealLoads.Games
 			_isSkippingCut.Update(game);
 			var map = (StringWatcher)watchers["map"];
 
-			if (_isSkippingCut.Changed && _isSkippingCut.Current && (string.IsNullOrEmpty(map.Old) || map.Current.ToLower() == "privetdr.unr") )
+			if (_isSkippingCut.Changed && _isSkippingCut.Current && (string.IsNullOrEmpty(map.Old) || map.Current.Equals("privetdr.unr",System.StringComparison.OrdinalIgnoreCase) ))
 				return new TimerAction[] { TimerAction.Start };
 
 			return null;

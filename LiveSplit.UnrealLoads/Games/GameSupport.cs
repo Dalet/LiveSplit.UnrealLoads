@@ -37,8 +37,6 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public virtual SaveGameDetour GetNewSaveGameDetour() => new SaveGameDetour();
 
-		
-
 		public string[] GetHookModules()
 		{
 			var list = new List<string>();
@@ -70,7 +68,7 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public virtual TimerAction[] OnAttach(Process game) => null;
 
-		public virtual TimerAction[] OnDetach(Process game) => null;
+		public virtual TimerAction[] OnDetach(Process game) => new TimerAction[] { TimerAction.PauseGameTime };
 	}
 
 }
