@@ -73,6 +73,7 @@
     <Compile Include="Games\UnrealGold.cs" />
     <Compile Include="Games\WheelOfTime.cs" />
     <Compile Include="Hooks.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="PE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnrealLoadsComponent.cs" />
@@ -94,6 +95,10 @@
     <Content Include="..\Components\update.LiveSplit.UnrealLoads.xml">
       <Link>update.LiveSplit.UnrealLoads.xml</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\DataSources\Map.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
