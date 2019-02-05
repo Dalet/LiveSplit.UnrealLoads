@@ -29,7 +29,7 @@ namespace LiveSplit.UnrealLoads.Games
 
 		public abstract HashSet<string> ProcessNames { get; }
 
-		public virtual string MapExtension { get; } = "";
+		public virtual string MapExtension { get; } = null;
 
 		public virtual HashSet<string> Maps { get; } = new HashSet<string>();
 
