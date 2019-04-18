@@ -121,15 +121,35 @@ namespace LiveSplit.UnrealLoads
 			{
 				var mapnames = from map in Maps
 							   select map.Name;
-				foreach (XmlElement elem in settings["MapWhitelist"].ChildNodes)
+
+				if (SettingsHelper.ParseAttributeVersion(settings["Version"]).CompareTo(new Version(1,6,1)) > 0)
 				{
-					if (mapnames.Contains(elem.InnerText, StringComparer.OrdinalIgnoreCase))
+					
+					foreach (XmlElement elem in settings["MapWhitelist"].ChildNodes)
 					{
-						var curMap = (from map in Maps
-									 where map.Name == elem.InnerText
-									 select map).First();
-						curMap.SplitOnEnter = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("SplitOnEnter")) ? "False" : elem.GetAttribute("SplitOnEnter"));
-						curMap.SplitOnLeave = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("SplitOnLeave")) ? "False" : elem.GetAttribute("SplitOnLeave"));
+						if (mapnames.Contains(elem.InnerText, StringComparer.OrdinalIgnoreCase))
+						{
+							var curMap = (from map in Maps
+										  where map.Name == elem.InnerText
+										  select map).First();
+							curMap.SplitOnEnter = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("SplitOnEnter")) ? "False" : elem.GetAttribute("SplitOnEnter"));
+							curMap.SplitOnLeave = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("SplitOnLeave")) ? "False" : elem.GetAttribute("SplitOnLeave"));
+						}
+					}
+				}
+				else
+				//backwards compatibility
+				{
+					foreach (XmlElement elem in settings["MapWhitelist"].ChildNodes)
+					{
+						if (mapnames.Contains(elem.InnerText, StringComparer.OrdinalIgnoreCase))
+						{
+							var curMap = (from map in Maps
+										  where map.Name == elem.InnerText
+										  select map).First();
+							curMap.SplitOnEnter = bool.Parse(string.IsNullOrEmpty(elem.GetAttribute("enabled")) ? "False" : elem.GetAttribute("enabled"));
+							curMap.SplitOnLeave = false;
+						}
 					}
 				}
 			}
