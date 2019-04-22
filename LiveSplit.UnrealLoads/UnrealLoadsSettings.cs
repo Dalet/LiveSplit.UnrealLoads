@@ -30,6 +30,7 @@ namespace LiveSplit.UnrealLoads
 
 		public UnrealLoadsSettings(LiveSplitState state)
 		{
+			Dock = DockStyle.Fill;
 			InitializeComponent();
 
 			_state = state;
