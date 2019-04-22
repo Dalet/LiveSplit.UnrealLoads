@@ -67,40 +67,31 @@ namespace LiveSplit.UnrealLoads
 				prevMap = prevMap.ToLower();
 				nextMap = nextMap.ToLower();
 
-				var split = false;
+				var shouldSplit = false;
 				if (Settings.Maps.Count == 0)
-					split = true;
+					shouldSplit = true;
 				else
 				{
-					var mapNames = from Map map in Settings.Maps
-								   where string.Equals(map.Name, prevMap, StringComparison.OrdinalIgnoreCase) && map.SplitOnLeave
-								   select map.Name;
-					if (mapNames.Count() > 0)
+					var leaveMap = Settings.Maps
+						.FirstOrDefault(map => map.SplitOnLeave && string.Equals(map.Name, prevMap, StringComparison.OrdinalIgnoreCase));
+
+					var enterMap = Settings.Maps
+						.FirstOrDefault(map => map.SplitOnEnter && string.Equals(map.Name, nextMap, StringComparison.OrdinalIgnoreCase));
+
+					if (ShouldSplitMap(leaveMap.Name))
 					{
-						var mapName = mapNames.First();
-						if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName, StringComparer.OrdinalIgnoreCase))
-						{
-							split = true;
-							_splitHistory.Add(mapName);
-						}
+						shouldSplit = true;
+						_splitHistory.Add(prevMap);
 					}
 
-					mapNames = from Map map in Settings.Maps
-							   where string.Equals(map.Name, nextMap, StringComparison.OrdinalIgnoreCase) && map.SplitOnEnter
-							   select map.Name;
-					if (mapNames.Count() > 0)
+					if (ShouldSplitMap(enterMap.Name))
 					{
-						var mapName = mapNames.First();
-						if (!Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName,StringComparer.OrdinalIgnoreCase))
-						{
-							split = true;
-							_splitHistory.Add(mapName);
-						}
+						shouldSplit = true;
+						_splitHistory.Add(nextMap);
 					}
 				}
 
-
-				if (split)
+				if (shouldSplit)
 				{
 					_timer.Split();
 				}
@@ -111,6 +102,11 @@ namespace LiveSplit.UnrealLoads
 				MessageBox.Show(_state.Form, prevMap + " -> " + nextMap, "LiveSplit.UnrealLoads",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 #endif
+		}
+
+		bool ShouldSplitMap(string mapName)
+		{
+			return !Settings.AutoSplitOncePerMap || !_splitHistory.Contains(mapName, StringComparer.OrdinalIgnoreCase);
 		}
 
 		public override void Dispose()
