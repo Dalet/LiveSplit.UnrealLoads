@@ -37,15 +37,15 @@ namespace LiveSplit.UnrealLoads
 			cbGame.DataSource = GameMemory.SupportedGames.Select(s => s.GetType())
 				.OrderBy(t => t.Name)
 				.ToList();
-			cbGame.DisplayMember = "Name";
+			cbGame.DisplayMember = nameof(Type.Name);
 
-			chkAutoStart.DataBindings.Add("Checked", this, "AutoStart", false, DataSourceUpdateMode.OnPropertyChanged);
-			chkAutoReset.DataBindings.Add("Checked", this, "AutoReset", false, DataSourceUpdateMode.OnPropertyChanged);
-			chkSplitOnNewMap.DataBindings.Add("Checked", this, "AutoSplitOnMapChange", false, DataSourceUpdateMode.OnPropertyChanged);
-			chkSplitOncePerMap.DataBindings.Add("Checked", this, "AutoSplitOncePerMap", false, DataSourceUpdateMode.OnPropertyChanged);
-			chkSplitOncePerMap.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
-			gbMapWhitelist.DataBindings.Add("Enabled", chkSplitOnNewMap, "Checked", false, DataSourceUpdateMode.OnPropertyChanged);
-			chkDbgShowMap.DataBindings.Add("Checked", this, "DbgShowMap", false, DataSourceUpdateMode.OnPropertyChanged);
+			chkAutoStart.DataBindings.Add(nameof(CheckBox.Checked), this, nameof(AutoStart), false, DataSourceUpdateMode.OnPropertyChanged);
+			chkAutoReset.DataBindings.Add(nameof(CheckBox.Checked), this, nameof(AutoReset), false, DataSourceUpdateMode.OnPropertyChanged);
+			chkSplitOnNewMap.DataBindings.Add(nameof(CheckBox.Checked), this, nameof(AutoSplitOnMapChange), false, DataSourceUpdateMode.OnPropertyChanged);
+			chkSplitOncePerMap.DataBindings.Add(nameof(CheckBox.Checked), this, nameof(AutoSplitOncePerMap), false, DataSourceUpdateMode.OnPropertyChanged);
+			chkSplitOncePerMap.DataBindings.Add(nameof(CheckBox.Enabled), chkSplitOnNewMap, nameof(CheckBox.Checked), false, DataSourceUpdateMode.OnPropertyChanged);
+			gbMapWhitelist.DataBindings.Add(nameof(GroupBox.Enabled), chkSplitOnNewMap, nameof(CheckBox.Checked), false, DataSourceUpdateMode.OnPropertyChanged);
+			chkDbgShowMap.DataBindings.Add(nameof(CheckBox.Checked), this, nameof(DbgShowMap), false, DataSourceUpdateMode.OnPropertyChanged);
 
 			// defaults
 			AutoStart = DEFAULT_AUTOSTART;
