@@ -184,7 +184,7 @@ namespace LiveSplit.UnrealLoads
 			{
 				foreach (var map in selected.Maps)
 				{
-					Maps.Add(new Map(map));
+					Maps.Add(new Map(map) { SplitOnEnter = true });
 				}
 			}
 
