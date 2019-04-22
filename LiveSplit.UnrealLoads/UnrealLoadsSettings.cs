@@ -3,6 +3,7 @@ using LiveSplit.UI;
 using LiveSplit.UnrealLoads.Games;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -35,6 +36,8 @@ namespace LiveSplit.UnrealLoads
 
 			_state = state;
 
+			dgvMapSet.EnabledChanged += DgvMapSet_EnabledChanged;
+
 			cbGame.DataSource = GameMemory.SupportedGames.Select(s => s.GetType())
 				.OrderBy(t => t.Name)
 				.ToList();
@@ -58,6 +61,29 @@ namespace LiveSplit.UnrealLoads
 #if DEBUG
 			chkDbgShowMap.Visible = true;
 #endif
+		}
+
+		void DgvMapSet_EnabledChanged(object sender, EventArgs e)
+		{
+			// https://stackoverflow.com/questions/8715459/disabling-or-greying-out-a-datagridview
+			// give it disabled look (it doesn't by default)
+			var dgv = (DataGridView)sender;
+			if (!dgv.Enabled)
+			{
+				dgv.DefaultCellStyle.BackColor = SystemColors.Control;
+				dgv.DefaultCellStyle.ForeColor = SystemColors.GrayText;
+				splitOnEnterDataGridViewCheckBoxColumn.CellTemplate.Style.ForeColor
+					= splitOnLeaveDataGridViewCheckBoxColumn.CellTemplate.Style.ForeColor
+					= Color.DarkGray;
+			}
+			else
+			{
+				dgv.DefaultCellStyle.BackColor = SystemColors.Window;
+				dgv.DefaultCellStyle.ForeColor = SystemColors.ControlText;
+				splitOnEnterDataGridViewCheckBoxColumn.CellTemplate.Style.ForeColor
+					= splitOnLeaveDataGridViewCheckBoxColumn.CellTemplate.Style.ForeColor
+					= Color.White;
+			}
 		}
 
 		static GameSupport SearchGameSupport(string name)
