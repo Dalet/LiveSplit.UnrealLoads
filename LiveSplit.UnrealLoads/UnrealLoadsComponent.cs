@@ -78,13 +78,13 @@ namespace LiveSplit.UnrealLoads
 					var enterMap = Settings.Maps
 						.FirstOrDefault(map => map.SplitOnEnter && string.Equals(map.Name, nextMap, StringComparison.OrdinalIgnoreCase));
 
-					if (ShouldSplitMap(leaveMap.Name))
+					if (leaveMap != null && ShouldSplitMap(leaveMap.Name))
 					{
 						shouldSplit = true;
 						_splitHistory.Add(prevMap);
 					}
 
-					if (ShouldSplitMap(enterMap.Name))
+					if (enterMap != null && ShouldSplitMap(enterMap.Name))
 					{
 						shouldSplit = true;
 						_splitHistory.Add(nextMap);
