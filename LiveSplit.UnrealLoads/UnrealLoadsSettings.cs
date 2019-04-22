@@ -122,7 +122,7 @@ namespace LiveSplit.UnrealLoads
 				var mapnames = from map in Maps
 							   select map.Name;
 
-				if (SettingsHelper.ParseAttributeVersion(settings["Version"]).CompareTo(new Version(1,6,1)) > 0)
+				if (SettingsHelper.ParseAttributeVersion(settings["Version"]) > new Version(1, 6, 1))
 				{
 					foreach (XmlElement elem in settings["MapWhitelist"].ChildNodes)
 					{
