@@ -1,4 +1,5 @@
 ﻿using LiveSplit.ComponentUtil;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -91,8 +92,11 @@ namespace LiveSplit.UnrealLoads.Games
 			_isSkippingCut.Update(game);
 			var map = (StringWatcher)watchers["map"];
 
-			if (_isSkippingCut.Changed && _isSkippingCut.Current && (string.IsNullOrEmpty(map.Old) || map.Current.Equals("privetdr.unr",System.StringComparison.OrdinalIgnoreCase) ))
+			if (_isSkippingCut.Changed && _isSkippingCut.Current
+				&& (string.IsNullOrEmpty(map.Old) || map.Current.Equals("privetdr.unr", StringComparison.OrdinalIgnoreCase)))
+			{
 				return new TimerAction[] { TimerAction.Start };
+			}
 
 			return null;
 		}

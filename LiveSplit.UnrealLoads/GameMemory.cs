@@ -143,7 +143,8 @@ namespace LiveSplit.UnrealLoads
 
 						if (_map.Changed)
 						{
-							if (string.IsNullOrEmpty(Game.MapExtension) || string.IsNullOrEmpty(Path.GetExtension(_map.Current)) || string.Equals(Path.GetExtension(_map.Current), Game.MapExtension, StringComparison.OrdinalIgnoreCase))
+							if (string.IsNullOrEmpty(Game.MapExtension) || string.IsNullOrEmpty(Path.GetExtension(_map.Current))
+								|| string.Equals(Path.GetExtension(_map.Current), Game.MapExtension, StringComparison.OrdinalIgnoreCase))
 							{
 								prevMap = map;
 								map = Path.GetFileNameWithoutExtension(_map.Current);

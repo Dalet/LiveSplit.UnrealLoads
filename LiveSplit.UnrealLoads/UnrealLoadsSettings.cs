@@ -124,7 +124,6 @@ namespace LiveSplit.UnrealLoads
 
 				if (SettingsHelper.ParseAttributeVersion(settings["Version"]).CompareTo(new Version(1,6,1)) > 0)
 				{
-					
 					foreach (XmlElement elem in settings["MapWhitelist"].ChildNodes)
 					{
 						if (mapnames.Contains(elem.InnerText, StringComparer.OrdinalIgnoreCase))

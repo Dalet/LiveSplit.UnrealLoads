@@ -62,7 +62,6 @@ namespace LiveSplit.UnrealLoads
 
 		void _gameMemory_OnMapChange(object sender, string prevMap, string nextMap)
 		{
-
 			if (Settings.AutoSplitOnMapChange)
 			{
 				prevMap = prevMap.ToLower();
@@ -85,7 +84,7 @@ namespace LiveSplit.UnrealLoads
 							_splitHistory.Add(mapName);
 						}
 					}
-					
+
 					mapNames = from Map map in Settings.Maps
 							   where string.Equals(map.Name, nextMap, StringComparison.OrdinalIgnoreCase) && map.SplitOnEnter
 							   select map.Name;
@@ -97,9 +96,9 @@ namespace LiveSplit.UnrealLoads
 							split = true;
 							_splitHistory.Add(mapName);
 						}
-					}	
+					}
 				}
-					
+
 
 				if (split)
 				{
