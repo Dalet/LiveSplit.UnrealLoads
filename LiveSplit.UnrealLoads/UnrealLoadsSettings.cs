@@ -173,7 +173,6 @@ namespace LiveSplit.UnrealLoads
 				Map map = (Map) row.DataBoundItem;
 				Maps.Remove(map);
 			}
-
 		}
 
 		void cbGame_SelectedIndexChanged(object sender, EventArgs e)
@@ -188,7 +187,6 @@ namespace LiveSplit.UnrealLoads
 					Maps.Add(new Map(map) { SplitOnEnter = true });
 				}
 			}
-
 		}
 	}
 }
