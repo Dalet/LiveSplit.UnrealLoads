@@ -41,7 +41,8 @@ namespace LiveSplit.UnrealLoads
 			new MobileForces(),
 			new XCOM_Enforcer(),
 			new DS9TheFallen(),
-			new KlingonHonorGuard()
+			new KlingonHonorGuard(),
+			new TheHeatOfWar() 
 		};
 	}
 }
