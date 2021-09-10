@@ -12,6 +12,7 @@ namespace LiveSplit.UnrealLoads.Games
 			"THOW",
 			"The Heat Of War",
 			"WWII Combat - Iwo Jima",
+			"WWII Combat: Iwo Jima",
 			"Iwo Jima",
 			"WWII Combat"
 		};
@@ -34,22 +35,6 @@ namespace LiveSplit.UnrealLoads.Games
 			"B_09_Map",
 			"B_10_Map"
 		};
-
-		
-//		public override TimerAction[] OnMapLoad(MemoryWatcherList watchers)
-//		{
-//			var map = (StringWatcher)watchers["map"];
-//
-//			if (map != null)
-//			{
-//				if (map.Current.Equals("B_01_Map.cmf", StringComparison.OrdinalIgnoreCase))
-//				{
-//					return new TimerAction[] { TimerAction.Start };
-//				}
-//			}	
-//
-//			return null;
-//		}
 	}
 }
 
